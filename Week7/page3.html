@@ -1,23 +1,60 @@
 <html>
-    <title>About You </title>
-    <link rel="stylesheet" type="text/css" 
-    href="classselectors.css">
-    <h1 class="my-text"> If you have a cat please feel free to tell us about them!
-        
-    </h1>
- <body><span class="my-text"> <span id="fontsize">
-    About your cat </span></span>
-    </body>
-    <body>
-    <br>
-    <form action="page4.html" type="POST">
-        Cat's Name <input type="text" id="cname"> <br>
-        Cat's Age: <input type="text" id="cage"> <br>
-        What kind of cat are they?: <input type="text" id="ctype"> <br>
-        What is your favorite thing about them? <input type="text" id="cfav"> <br>
-        <button id="mysubmit" type="submit"> Submit </button>
-
-    </form>
-    <br>
- </body>
-</html>
+        <title>About You</title>
+        <link rel="stylesheet" type="text/css" href="classselectors.css">
+        <h1 class="my-text"> If you have a cat please feel free to tell us about them!</h1>
+        <body>
+            <span class="my-text"> <span id="fontsize">About you and your cat!</span></span>
+            <br>
+            <form id="catForm" action="page4.html" method="POST">
+                <h3>Your Information</h3>
+                Name: <input type="text" id="name"> <br>
+                Email: <input type="email" id="email"> <br>
+                <input type="checkbox" id="terms"> I agree to the terms <br>
+                
+                <h3>About Your Cat</h3>
+                Cat's Name: <input type="text" id="cname"> <br>
+                Cat's Age: <input type="text" id="cage"> <br>
+                What kind of cat are they?: <input type="text" id="ctype"> <br>
+                What is your favorite thing about them?: <input type="text" id="cfav"> <br>
+                <button id="mysubmit" type="submit"> Submit </button>
+            </form>
+            <br>
+            <script>
+                document.getElementById("catForm").addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    let valid = true;
+                    let firstErrorField = null;
+                    
+                    const fields = ["name", "email", "cname", "cage", "ctype", "cfav"];
+                    fields.forEach(field => {
+                        let input = document.getElementById(field);
+                        if (!input.value.trim()) {
+                            input.classList.add("error");
+                            if (!firstErrorField) firstErrorField = input;
+                        } else {
+                            input.classList.remove("error");
+                        }
+                    });
+                    
+                    let terms = document.getElementById("terms");
+                    if (!terms.checked) {
+                        alert("You must agree to the terms.");
+                        if (!firstErrorField) firstErrorField = terms;
+                    }
+                    
+                    if (firstErrorField) {
+                        firstErrorField.focus();
+                    } else {
+                        alert("Form submitted successfully!");
+                        this.submit();
+                    }
+                });
+            </script>
+            <style>
+                .error {
+                    border: 2px solid red;
+                    background-color: #ffe6e6;
+                }
+            </style>
+        </body>
+    </html>
